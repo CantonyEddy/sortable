@@ -2,13 +2,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const apiUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.2.0/api/all.json";
     const selectElement = document.getElementById("number-items");
     const dataInfoElement = document.getElementById("hero-info");
+    const page = document.getElementById("page");
+    let nbHeros = 0;
 
-    function loadData(dataNumber) {
+    function loadData(dataNumberMin, dataNumberMax) {
         fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-
-            const sample = data.slice(0, dataNumber);
+            nbHeros = data.length;
+            const sample = data.slice(dataNumberMin, dataNumberMax);
 
             dataInfoElement.innerHTML = "";
 
@@ -36,6 +38,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 raceElement.textContent = `Race: ${hero.appearance.race}`;
                 heroElement.appendChild(raceElement);
 
+                const idElement = document.createElement("p");
+                idElement.textContent = `id: ${hero.id}`;
+                heroElement.appendChild(idElement);
+
                 document.getElementById("hero-info").appendChild(heroElement);
             });
         })
@@ -43,14 +49,39 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Une erreur s'est produite lors de la récupération des données:", error);
         });
     }
+
     selectElement.addEventListener("change", function() {
         if (selectElement.value === "all"){
-            loadData(731);
+            loadData(0, nbHeros);
+            page.innerHTML = "";
         }else{
             const dataNumber = parseInt(selectElement.value);
-            loadData(dataNumber);
+            loadData(0, dataNumber);
+            const coucou = Math.ceil(nbHeros/dataNumber);
+            console.log(coucou, nbHeros);
+            page.innerHTML = "";
+            for (var i = 0; i < coucou; i++){
+                const newButton = document.createElement("button");
+                newButton.textContent = `${i+1}`;
+                page.appendChild(newButton);
+
+                newButton.addEventListener("click", function(event) {
+                    const buttonText = event.target.textContent;
+                    loadData(buttonText*dataNumber-dataNumber, buttonText*dataNumber);
+                });
+            }
         }
     });
     const initialData = parseInt(selectElement.value);
-    loadData(initialData);
+    loadData(0, initialData);
+    for (var i = 0; i < 37; i++){
+        const newButton = document.createElement("button");
+        newButton.textContent = `${i+1}`;
+        page.appendChild(newButton);
+
+        newButton.addEventListener("click", function(event) {
+            const buttonText = event.target.textContent;
+            loadData(buttonText*20-20, buttonText*20);
+        });
+    }
 });
