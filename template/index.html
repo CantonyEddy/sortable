@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>Document</title>
+    <title>Superhero Database</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <label for="number-items">Number of items displayed:</label>
-
-    <select name="items" id="number-items">
-    <option value="10">10</option>
-    <option value="20" selected>20</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-    <option value="all">all</option>
-    </select>
-    <div class="heros" id="hero-info"></div>
-
-    <script src="static/js/sortable.js"></script>
+    <div class="container">
+        <select id="number-items">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="all">All</option>
+        </select>
+        <input type="text" id="searchBar" placeholder="Search for superheroes...">
+        <div id="hero-info"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
