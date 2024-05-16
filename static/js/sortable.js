@@ -18,31 +18,41 @@ document.addEventListener("DOMContentLoaded", function() {
                 const heroElement = document.createElement("div");
                 heroElement.classList.add("hero");
 
+                const heroRow = document.createElement("tr");
+
+                const imageCell = document.createElement("td");
                 const imageElement = document.createElement("img");
-                imageElement.src = hero.images.md;
-                heroElement.appendChild(imageElement);
+                imageElement.src = hero.images.xs;
+                imageElement.alt = hero.name;
+                imageElement.style.width = "50px";
+                imageCell.appendChild(imageElement);
+                heroRow.appendChild(imageCell);
 
-                const nameElement = document.createElement("h2");
-                nameElement.textContent = hero.name;
-                heroElement.appendChild(nameElement);
-
-                const fullNameElement = document.createElement("h3");
-                fullNameElement.textContent = hero.biography.fullName;
-                heroElement.appendChild(fullNameElement);
-
-                const powerstatsElement = document.createElement("p");
-                powerstatsElement.textContent = `Intelligence: ${hero.powerstats.intelligence}, Strength: ${hero.powerstats.strength}, Speed: ${hero.powerstats.speed}`;
-                heroElement.appendChild(powerstatsElement);
-
-                const raceElement = document.createElement("p");
-                raceElement.textContent = `Race: ${hero.appearance.race}`;
-                heroElement.appendChild(raceElement);
-
-                const idElement = document.createElement("p");
-                idElement.textContent = `id: ${hero.id}`;
-                heroElement.appendChild(idElement);
-
-                document.getElementById("hero-info").appendChild(heroElement);
+                const nameCell = document.createElement("td");
+                nameCell.textContent = hero.name;
+                heroRow.appendChild(nameCell);
+    
+                const fullNameCell = document.createElement("td");
+                fullNameCell.textContent = hero.biography.fullName;
+                heroRow.appendChild(fullNameCell);
+    
+                const intelligenceCell = document.createElement("td");
+                intelligenceCell.textContent = hero.powerstats.intelligence;
+                heroRow.appendChild(intelligenceCell);
+    
+                const strengthCell = document.createElement("td");
+                strengthCell.textContent = hero.powerstats.strength;
+                heroRow.appendChild(strengthCell);
+    
+                const speedCell = document.createElement("td");
+                speedCell.textContent = hero.powerstats.speed;
+                heroRow.appendChild(speedCell);
+    
+                const raceCell = document.createElement("td");
+                raceCell.textContent = hero.appearance.race;
+                heroRow.appendChild(raceCell);
+    
+                dataInfoElement.appendChild(heroRow);
             });
         })
         .catch(error => {
@@ -74,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     const initialData = parseInt(selectElement.value);
     loadData(0, initialData);
-    for (var i = 0; i < 37; i++){
+    for (var i = 0; i < 29; i++){
         const newButton = document.createElement("button");
         newButton.textContent = `${i+1}`;
         page.appendChild(newButton);
