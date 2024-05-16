@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Filtrer les superhéros selon la recherche
     function filterHeroes() {
         const searchTerm = searchBar.value.toLowerCase();
-        const filteredHeroes = displayedHeroes.filter(hero => {
+        const filteredHeroes = allHeroes.filter(hero => {
             return hero.name.toLowerCase().includes(searchTerm) ||
                    (hero.biography.fullName && hero.biography.fullName.toLowerCase().includes(searchTerm)) ||
                    (hero.appearance.race && hero.appearance.race.toLowerCase().includes(searchTerm));
