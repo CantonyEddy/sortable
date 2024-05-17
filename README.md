@@ -15,7 +15,7 @@ Comment installer le projet sortable.
 
 ```bash
 # Clonez le dépôt
-git clone [https://github.com/RYUJINC/sortable.git](https://github.com/RYUJINC/sortable.git)
+git clone https://github.com/RYUJINC/sortable.git
 
 # Allez dans le répertoire du projet
 cd votre-projet
