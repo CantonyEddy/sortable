@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
     let allHeroes = [];
     let filteredHeroes = [];
 
+
+    //Function to load API in data
     function loadData() {
         fetch(apiUrl)
             .then(response => response.json())
@@ -24,11 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     }
 
+    //Function that takes the correct slice of data display
     function updateDisplayedHeroes(dataNumberMin, dataNumber) {
         const heroesToDisplay = filteredHeroes.slice(dataNumberMin, dataNumber);
         displayHeroes(heroesToDisplay);
     }
 
+    //Function that displays data
     function displayHeroes(heroes) {
         dataInfoElement.innerHTML = "";
 
@@ -91,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    //Function that filter data from the search bar
     function filterHeroes() {
         const searchTerm = searchBar.value.toLowerCase();
         filteredHeroes = allHeroes.filter(hero => {
@@ -102,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateDisplayedHeroes(0, dataNumber);
     }
 
+    //Function that sorts data based on stats
     function filterStats(stats){
         switch (stats){
             case "name":
@@ -127,9 +133,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 filteredHeroes.sort((a, b) => {
                     const fullNameA = a.biography.fullName.toLowerCase();
                     const fullNameB = b.biography.fullName.toLowerCase();
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -166,14 +174,22 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 11;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.appearance.race === null) return 1;
-                    if (b.appearance.race === null) return -1;
-                    if (a.appearance.race === null && b.appearance.race === null) return 0;
+                    if (filterSens%2 != 0){
+                        if (a.appearance.race === null) return 1;
+                        if (b.appearance.race === null) return -1;
+                        if (a.appearance.race === null && b.appearance.race === null) return 0;
+                    }else{
+                        if (a.appearance.race === null) return -1;
+                        if (b.appearance.race === null) return 1;
+                        if (a.appearance.race === null && b.appearance.race === null) return 0;
+                    }
                     const fullNameA = a.appearance.race.toLowerCase();
                     const fullNameB = b.appearance.race.toLowerCase();
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -186,14 +202,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 13;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.appearance.gender === "-") return 1;
-                    if (b.appearance.gender === "-") return -1;
-                    if (a.appearance.gender === "-" && b.appearance.gender === "-") return 0;
+                    if (filterSens%2 != 0){
+                        if (a.appearance.gender === "-") return 1;
+                        if (b.appearance.gender === "-") return -1;
+                        if (a.appearance.gender === "-" && b.appearance.gender === "-") return 0;
+                    }
                     const fullNameA = a.appearance.gender.toLowerCase();
                     const fullNameB = b.appearance.gender.toLowerCase();
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -206,9 +226,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 15;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.appearance.height[0] === "-") return 1;
-                    if (b.appearance.height[0] === "-") return -1;
-                    if (a.appearance.height[0] === "-" && b.appearance.height[0] === "-") return 0;
+                    if (filterSens%2 != 0){
+                        if (a.appearance.height[0] === "-") return 1;
+                        if (b.appearance.height[0] === "-") return -1;
+                        if (a.appearance.height[0] === "-" && b.appearance.height[0] === "-") return 0;
+                    }
                     let fullNameA = a.appearance.height[0];
                     let fullNameB = b.appearance.height[0];
                     for (let i = 0; i < fullNameA.length-1; i++){
@@ -229,9 +251,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         fullNameB = fullNameB.slice(0, -1);
                     }
                     fullNameB = parseFloat(fullNameB);
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -244,14 +268,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 17;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.appearance.weight[0] === "- lb") return 1;
-                    if (b.appearance.weight[0] === "- lb") return -1;
-                    if (a.appearance.weight[0] === "- lb" && b.appearance.weight[0] === "- lb") return 0;
+                    if (filterSens%2 != 0){
+                        if (a.appearance.weight[0] === "- lb") return 1;
+                        if (b.appearance.weight[0] === "- lb") return -1;
+                        if (a.appearance.weight[0] === "- lb" && b.appearance.weight[0] === "- lb") return 0;
+                    }
                     const fullNameA = parseInt(a.appearance.weight[0].slice(0, -3).toLowerCase(), 10);
                     const fullNameB = parseInt(b.appearance.weight[0].slice(0, -3).toLowerCase(), 10);
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -264,14 +292,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 19;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.biography.placeOfBirth === "-") return 1;
-                    if (b.biography.placeOfBirth === "-") return -1;
-                    if (a.biography.placeOfBirth === "-" && b.biography.placeOfBirth === "-") return 0;
+                    if (filterSens%2 != 0){
+                        if (a.biography.placeOfBirth === "-") return 1;
+                        if (b.biography.placeOfBirth === "-") return -1;
+                        if (a.biography.placeOfBirth === "-" && b.biography.placeOfBirth === "-") return 0;
+                    }
                     const fullNameA = a.biography.placeOfBirth.toLowerCase();
                     const fullNameB = b.biography.placeOfBirth.toLowerCase();
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -284,14 +316,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     filterSens = 21;
                 }
                 filteredHeroes.sort((a, b) => {
-                    if (a.biography.alignment === "-") return 1;
-                    if (b.biography.alignment === "-") return -1;
-                    if (a.biography.alignment === "-" && b.biography.alignment === "-") return 0;
+                    if (filterSens%2 != 0){
+                        if (a.biography.alignment === "-") return 1;
+                        if (b.biography.alignment === "-") return -1;
+                        if (a.biography.alignment === "-" && b.biography.alignment === "-") return 0;
+                    }
                     const fullNameA = a.biography.alignment.toLowerCase();
                     const fullNameB = b.biography.alignment.toLowerCase();
-                    if (!fullNameA && fullNameB) return 1;
-                    if (fullNameA && !fullNameB) return -1;
-                    if (!fullNameA && !fullNameB) return 0;
+                    if (filterSens%2 != 0){   
+                        if (!fullNameA && fullNameB) return 1;
+                        if (fullNameA && !fullNameB) return -1;
+                        if (!fullNameA && !fullNameB) return 0;
+                    }
                     if (fullNameA < fullNameB) return -1;
                     if (fullNameA > fullNameB) return 1;
                     return 0;
@@ -305,6 +341,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateDisplayedHeroes(0, dataNumber);
     }
 
+    //Function which listens to the select items and which displays the right amount of information
     selectElement.addEventListener("change", function() {
         const dataNumber = selectElement.value === "all" ? nbHeros : parseInt(selectElement.value);
         updateDisplayedHeroes(0, dataNumber);
@@ -329,14 +366,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     searchBar.addEventListener("input", filterHeroes);
 
+    //Function that listens for "th" tags and calls the stats filter
     document.querySelectorAll("th[data-column]").forEach(header => {
         header.addEventListener("click", function() {
             const column = header.getAttribute("data-column");
-            console.log(column);
             filterStats(column);
         });
     });
 
+    //page initialization
     loadData();
     const dataNumber = selectElement.value === "all" ? nbHeros : parseInt(selectElement.value);
         for (let i = 0; i < 29; i++) {
