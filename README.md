@@ -44,7 +44,7 @@ Discord : [Server KALIX](https://discord.gg/Dmh6wHaKvD)
 
 ## Remerciements
 
-Nous remercions tous les membres qui ont travaillé sur le projet : [Opiderme](https://github.com/Opiderme); [Ryujin](https://github.com/RYUJINC); [Alex](https://github.com/AlexEchaz)
+Nous remercions tous les membres qui ont travaillé sur le projet : [Opiderme](https://github.com/Opiderme) [Ryujin](https://github.com/RYUJINC) [Alex](https://github.com/AlexEchaz)
 
 
 ### Explications de chaque section
