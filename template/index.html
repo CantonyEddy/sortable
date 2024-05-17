@@ -16,7 +16,30 @@
     <option value="100">100</option>
     <option value="all">all</option>
     </select>
-    <div class="heros" id="hero-info"></div>
+    <input type="text" id="searchBar" placeholder="Search character...">
+    <table id="hero-table">
+        <thead>
+            <tr>
+                <th data-column="img">picture</th>
+                <th data-column="name">Name</th>
+                <th data-column="fullName">Full Name</th>
+                <th data-column="intelligence">Intelligence</th>
+                <th data-column="strength">Strength</th>
+                <th data-column="speed">Speed</th>
+                <th data-column="race">Race</th>
+                <th data-column="gender">Gender</th>
+                <th data-column="height">Height</th>
+                <th data-column="weight">Weight</th>
+                <th data-column="place-of-birth">Place Of Birth</th>
+                <th data-column="alignment">Alignment</th>
+            </tr>
+        </thead>
+        <tbody id="hero-info">
+            <!-- Les données seront insérées ici -->
+        </tbody>
+    </table>
+
+    <div id="page"></div>
 
     <script src="static/js/sortable.js"></script>
 </body>
