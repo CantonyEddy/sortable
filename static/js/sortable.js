@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchBar = document.getElementById("searchBar");
     let nbHeros = 0;
 
+    let filterSens = 0;
+
     let allHeroes = [];
     let filteredHeroes = [];
 
@@ -65,6 +67,26 @@ document.addEventListener("DOMContentLoaded", function() {
             raceCell.textContent = hero.appearance.race;
             heroRow.appendChild(raceCell);
 
+            const genderCell = document.createElement("td");
+            genderCell.textContent = hero.appearance.gender;
+            heroRow.appendChild(genderCell);
+
+            const heightCell = document.createElement("td");
+            heightCell.textContent = hero.appearance.height;
+            heroRow.appendChild(heightCell);
+
+            const weightCell = document.createElement("td");
+            weightCell.textContent = hero.appearance.weight;
+            heroRow.appendChild(weightCell);
+
+            const placeOfBirthCell = document.createElement("td");
+            placeOfBirthCell.textContent = hero.biography.placeOfBirth;
+            heroRow.appendChild(placeOfBirthCell);
+
+            const alignmentCell = document.createElement("td");
+            alignmentCell.textContent = hero.biography.alignment;
+            heroRow.appendChild(alignmentCell);
+
             dataInfoElement.appendChild(heroRow);
         });
     }
@@ -77,6 +99,209 @@ document.addEventListener("DOMContentLoaded", function() {
                    (hero.appearance.race && hero.appearance.race.toLowerCase().includes(searchTerm));
         });
         const dataNumber = selectElement.value === "all" ? nbHeros : parseInt(selectElement.value);
+        updateDisplayedHeroes(0, dataNumber);
+    }
+
+    function filterStats(stats){
+        switch (stats){
+            case "name":
+                if (filterSens === 1){
+                    filterSens = 2;
+                }else{
+                    filterSens = 1;
+                }
+                filteredHeroes.sort((a, b) => {
+                    const fullNameA = a.name.toLowerCase();
+                    const fullNameB = b.name.toLowerCase();
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "fullName":
+                if (filterSens === 3){
+                    filterSens = 4;
+                }else{
+                    filterSens = 3;
+                }
+                filteredHeroes.sort((a, b) => {
+                    const fullNameA = a.biography.fullName.toLowerCase();
+                    const fullNameB = b.biography.fullName.toLowerCase();
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "intelligence":
+                if (filterSens === 5){
+                    filterSens = 6;
+                }else{
+                    filterSens = 5;
+                }
+                filteredHeroes.sort((a, b) => a.powerstats.intelligence - b.powerstats.intelligence);
+                break;
+            case "strength":
+                if (filterSens === 7){
+                    filterSens = 8;
+                }else{
+                    filterSens = 7;
+                }
+                filteredHeroes.sort((a, b) => a.powerstats.strength - b.powerstats.strength);
+                break;
+            case "speed":
+                if (filterSens === 9){
+                    filterSens = 10;
+                }else{
+                    filterSens = 9;
+                }
+                filteredHeroes.sort((a, b) => a.powerstats.speed - b.powerstats.speed);
+                break;
+            case "race":
+                if (filterSens === 11){
+                    filterSens = 12;
+                }else{
+                    filterSens = 11;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.appearance.race === null) return 1;
+                    if (b.appearance.race === null) return -1;
+                    if (a.appearance.race === null && b.appearance.race === null) return 0;
+                    const fullNameA = a.appearance.race.toLowerCase();
+                    const fullNameB = b.appearance.race.toLowerCase();
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "gender":
+                if (filterSens === 13){
+                    filterSens = 14;
+                }else{
+                    filterSens = 13;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.appearance.gender === "-") return 1;
+                    if (b.appearance.gender === "-") return -1;
+                    if (a.appearance.gender === "-" && b.appearance.gender === "-") return 0;
+                    const fullNameA = a.appearance.gender.toLowerCase();
+                    const fullNameB = b.appearance.gender.toLowerCase();
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "height":
+                if (filterSens === 15){
+                    filterSens = 16;
+                }else{
+                    filterSens = 15;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.appearance.height[0] === "-") return 1;
+                    if (b.appearance.height[0] === "-") return -1;
+                    if (a.appearance.height[0] === "-" && b.appearance.height[0] === "-") return 0;
+                    let fullNameA = a.appearance.height[0];
+                    let fullNameB = b.appearance.height[0];
+                    for (let i = 0; i < fullNameA.length-1; i++){
+                        if (fullNameA[i] === "'"){
+                            fullNameA[i] = ".";
+                        }
+                    }
+                    if (fullNameA[fullNameA.length-1] === "'"){
+                        fullNameA = fullNameA.slice(0, -1);
+                    }
+                    fullNameA = parseFloat(fullNameA);
+                    for (let i = 0; i < fullNameB.length-1; i++){
+                        if (fullNameB[i] === "'"){
+                            fullNameB[i] = ".";
+                        }
+                    }
+                    if (fullNameB[fullNameB.length-1] === "'"){
+                        fullNameB = fullNameB.slice(0, -1);
+                    }
+                    fullNameB = parseFloat(fullNameB);
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "weight":
+                if (filterSens === 17){
+                    filterSens = 18;
+                }else{
+                    filterSens = 17;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.appearance.weight[0] === "- lb") return 1;
+                    if (b.appearance.weight[0] === "- lb") return -1;
+                    if (a.appearance.weight[0] === "- lb" && b.appearance.weight[0] === "- lb") return 0;
+                    const fullNameA = parseInt(a.appearance.weight[0].slice(0, -3).toLowerCase(), 10);
+                    const fullNameB = parseInt(b.appearance.weight[0].slice(0, -3).toLowerCase(), 10);
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "place-of-birth":
+                if (filterSens === 19){
+                    filterSens = 20;
+                }else{
+                    filterSens = 19;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.biography.placeOfBirth === "-") return 1;
+                    if (b.biography.placeOfBirth === "-") return -1;
+                    if (a.biography.placeOfBirth === "-" && b.biography.placeOfBirth === "-") return 0;
+                    const fullNameA = a.biography.placeOfBirth.toLowerCase();
+                    const fullNameB = b.biography.placeOfBirth.toLowerCase();
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+            case "alignment":
+                if (filterSens === 21){
+                    filterSens = 22;
+                }else{
+                    filterSens = 21;
+                }
+                filteredHeroes.sort((a, b) => {
+                    if (a.biography.alignment === "-") return 1;
+                    if (b.biography.alignment === "-") return -1;
+                    if (a.biography.alignment === "-" && b.biography.alignment === "-") return 0;
+                    const fullNameA = a.biography.alignment.toLowerCase();
+                    const fullNameB = b.biography.alignment.toLowerCase();
+                    if (!fullNameA && fullNameB) return 1;
+                    if (fullNameA && !fullNameB) return -1;
+                    if (!fullNameA && !fullNameB) return 0;
+                    if (fullNameA < fullNameB) return -1;
+                    if (fullNameA > fullNameB) return 1;
+                    return 0;
+                });
+                break;
+        }
+        let dataNumber = selectElement.value === "all" ? nbHeros : parseInt(selectElement.value);
+        if (filterSens%2 === 0){
+            filteredHeroes.reverse();
+        }
         updateDisplayedHeroes(0, dataNumber);
     }
 
@@ -103,6 +328,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     searchBar.addEventListener("input", filterHeroes);
+
+    document.querySelectorAll("th[data-column]").forEach(header => {
+        header.addEventListener("click", function() {
+            const column = header.getAttribute("data-column");
+            console.log(column);
+            filterStats(column);
+        });
+    });
 
     loadData();
     const dataNumber = selectElement.value === "all" ? nbHeros : parseInt(selectElement.value);
